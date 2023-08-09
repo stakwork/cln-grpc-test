@@ -1,0 +1,16 @@
+[package]
+name = "testrs"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tonic = { version = "0.8", features = ["tls", "transport"] }
+cln-grpc = { git = "https://github.com/stakwork/lightning", branch = "cln-grpc-serde" }
+tokio = { version = "1.0", features = ["fs", "rt-multi-thread"] }
+anyhow = "1.0"
+hex = "0.4.3"
+clap = { version = "4.3.21", features = ["derive"] }
+env_logger = "0.10.0"
+log = "0.4.19"
