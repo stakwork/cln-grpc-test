@@ -11,6 +11,7 @@ cln-grpc = { git = "https://github.com/stakwork/lightning", branch = "cln-grpc-s
 tokio = { version = "1.0", features = ["fs", "rt-multi-thread"] }
 anyhow = "1.0"
 hex = "0.4.3"
-clap = { version = "4.3.21", features = ["derive"] }
+clap = { version = "4.3.21", features = ["derive", "env"] }
 env_logger = "0.10.0"
 log = "0.4.19"
+dotenv = { version = "0.15.0", features = ["clap"] }
