@@ -27,6 +27,10 @@ struct Args {
     #[arg(short, long, env, default_value_t = String::from_str("info").unwrap())]
     command: String,
 
+    /// eg /home/sphinx
+    #[arg(long, env, default_value_t = String::from_str(".").unwrap())]
+    creds: String,
+
     /// eg 5
     #[arg(short, long, env, default_value_t = 5u64)]
     amount_sat: u64,
@@ -64,6 +68,7 @@ async fn main() -> anyhow::Result<()> {
     let url = args.url;
     let port = args.nport;
     let command = args.command;
+    let creds_dir = args.creds;
     let pk = args.destination;
     let amt_msat = args.amount_sat * 1000;
     let lhpk = args.lhpk;
@@ -72,8 +77,7 @@ async fn main() -> anyhow::Result<()> {
     let expirydelta = args.expirydelta;
     let feeprop = args.prop;
 
-    let creds_dir = ".";
-    let creds = utils::collect_creds(creds_dir).await?;
+    let creds = utils::collect_creds(&creds_dir).await?;
     let mut client = cln::ClnRPC::try_new(&url, &port, &creds, 50).await?;
 
     if &command == "info" {
