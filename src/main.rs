@@ -6,6 +6,11 @@ use dotenv::dotenv;
 use std::str::FromStr;
 use utils::to_cln;
 
+/*
+ * PLEASE PUT ca.pem client.pem client-key.pem in the base dir of this project
+ * wherever you run `cargo run` from
+ */
+
 /// cln-grpc playground
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
