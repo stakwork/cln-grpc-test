@@ -30,3 +30,10 @@ pub async fn collect_creds(root: &str) -> Result<Creds> {
 pub async fn sleep_ms(n: u64) {
     tokio::time::sleep(std::time::Duration::from_millis(n)).await;
 }
+
+pub fn to_cln(scid: u64) -> String {
+    let block = scid >> 40 & 0xffffff;
+    let tx = scid >> 16 & 0xffffff;
+    let output = scid & 0xffff;
+    format!("{}x{}x{}", block, tx, output)
+}

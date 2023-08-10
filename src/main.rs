@@ -4,6 +4,7 @@ mod utils;
 use clap::Parser;
 use dotenv::dotenv;
 use std::str::FromStr;
+use utils::to_cln;
 
 /// cln-grpc playground
 #[derive(Parser, Debug)]
@@ -80,11 +81,4 @@ async fn main() -> anyhow::Result<()> {
         println!("HM {:?}", hm);
     }
     Ok(())
-}
-
-fn to_cln(scid: u64) -> String {
-    let block = scid >> 40 & 0xffffff;
-    let tx = scid >> 16 & 0xffffff;
-    let output = scid & 0xffff;
-    format!("{}x{}x{}", block, tx, output)
 }
