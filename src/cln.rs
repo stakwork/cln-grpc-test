@@ -49,6 +49,23 @@ impl ClnRPC {
         Ok(response.into_inner())
     }
 
+    pub async fn get_route(&mut self) -> Result<pb::GetrouteResponse> {
+        let response = self
+            .client
+            .get_route(pb::GetrouteRequest {
+                amount_msat: Some(pb::Amount { msat: 10000 }),
+                cltv: None,
+                exclude: vec![],
+                fromid: None,
+                fuzzpercent: None,
+                id: vec![],
+                maxhops: None,
+                riskfactor: 0u64,
+            })
+            .await?;
+        Ok(response.into_inner())
+    }
+
     pub async fn keysend_with_route_hint(
         &mut self,
         id: &str,

@@ -24,7 +24,7 @@ struct Args {
     nport: String,
 
     /// eg info
-    #[arg(short, long, env, default_value_t = String::from_str("info").unwrap())]
+    #[arg(short, long, env, default_value_t = String::from_str("getinfo").unwrap())]
     command: String,
 
     /// eg /home/sphinx
@@ -65,10 +65,14 @@ async fn main() -> anyhow::Result<()> {
     env_logger::init();
     dotenv().ok();
     let args = Args::parse();
+
+    // global arguments
     let url = args.url;
     let port = args.nport;
     let command = args.command;
     let creds_dir = args.creds;
+
+    // keysend arguments
     let pk = args.destination;
     let amt_msat = args.amount_sat * 1000;
     let lhpk = args.lhpk;
@@ -80,7 +84,7 @@ async fn main() -> anyhow::Result<()> {
     let creds = utils::collect_creds(&creds_dir).await?;
     let mut client = cln::ClnRPC::try_new(&url, &port, &creds, 50).await?;
 
-    if &command == "info" {
+    if &command == "getinfo" {
         let info = client.get_info().await?;
         println!("INFO {:?}", info);
     } else if &command == "keysend" {
