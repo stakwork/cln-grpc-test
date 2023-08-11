@@ -87,14 +87,14 @@ impl ClnRPC {
 
         // deran
         let id = "02e2b4a7836574e9504e86131ddb56f105feba1ebef2151684ccfbabf0114a1c77";
-        let amt_msat = 123000;
+        let amt_msat = 3000;
         let destination = hex::decode(id)?;
 
         // game b 1 -> game b 3
         let gameb_1_id = "023d70f2f76d283c6c4e58109ee3a2816eb9d8feb40b23d62469060a2b2867b77f";
         let gameb_1_scid = "750452x1749x1";
         let gameb_1_feebase = 0;
-        let gameb_1_delta = 100;
+        let gameb_1_delta = 40;
         let gameb_1_feeprop = 3000;
         let hop0 = pb::RouteHop {
             id: hex::decode(gameb_1_id)?,
