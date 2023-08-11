@@ -49,16 +49,17 @@ impl ClnRPC {
         Ok(response.into_inner())
     }
 
-    pub async fn get_route(&mut self) -> Result<pb::GetrouteResponse> {
+    pub async fn get_route(&mut self, id: &str, amount_msat: u64) -> Result<pb::GetrouteResponse> {
+        let destination = hex::decode(id)?;
         let response = self
             .client
             .get_route(pb::GetrouteRequest {
-                amount_msat: Some(pb::Amount { msat: 10000 }),
+                amount_msat: Some(pb::Amount { msat: amount_msat }),
                 cltv: None,
                 exclude: vec![],
                 fromid: None,
                 fuzzpercent: None,
-                id: vec![],
+                id: destination,
                 maxhops: None,
                 riskfactor: 0u64,
             })

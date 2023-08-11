@@ -6,11 +6,6 @@ use dotenv::dotenv;
 use std::str::FromStr;
 use utils::to_cln;
 
-/*
- * PLEASE PUT ca.pem client.pem client-key.pem in the base dir of this project
- * wherever you run `cargo run` from
- */
-
 /// cln-grpc playground
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -65,6 +60,15 @@ enum Commands {
         #[arg(short, long, env, default_value_t = 1)]
         prop: u32,
     },
+    Getroute {
+        /// eg 5
+        #[arg(short, long, env, default_value_t = 5u64)]
+        amount_sat: u64,
+
+        /// eg 02736e7dad83d7205826649fc17db672ce08f8e87a2b47c7785ccbf79f24e91db0
+        #[arg(short, long, env, default_value_t = String::from_str("02736e7dad83d7205826649fc17db672ce08f8e87a2b47c7785ccbf79f24e91db0").unwrap())]
+        destination: String,
+    },
 }
 
 #[tokio::main]
@@ -110,6 +114,14 @@ async fn main() -> anyhow::Result<()> {
                 )
                 .await?;
             println!("HM {:?}", hm);
+        }
+        Commands::Getroute {
+            destination,
+            amount_sat,
+        } => {
+            let amt_msat = amount_sat * 1000;
+            let hm = client.get_route(&destination, amt_msat).await?;
+            println!("HM: {:?}", hm);
         }
     }
     Ok(())
